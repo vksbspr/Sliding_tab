@@ -3,8 +3,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -17,12 +20,13 @@ public class MainActivity extends ActionBarActivity {
     SlidingTabLayout tabs;
     CharSequence Titles[]={"Home","Events"};
     int Numboftabs =2;
+    public static String package_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        package_name=getApplicationContext().getPackageName();
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
@@ -47,7 +51,6 @@ public class MainActivity extends ActionBarActivity {
                 return getResources().getColor(R.color.tabsScrollColor);
             }
         });
-
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
     }
@@ -73,5 +76,12 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void tabchange(View view){
+        adapter.flag=!adapter.flag;
+       Log.v(this.getApplication().getPackageName(), "changed tab");
+        TextView tabch=(TextView)view;
+        tabch.setText(tabch.getText()+"changed  ");
+        adapter.notifyDataSetChanged();
     }
 }
